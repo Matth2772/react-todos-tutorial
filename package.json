@@ -10,8 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "lodash": "^4.17.4",
     "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react-dom": "^16.2.0",
+    "webpack-preset-babel-stage-2": "^0.2.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
