@@ -2,39 +2,43 @@ var webpack = require('webpack');
 var path = require('path');
 
 module.exports = {
-    devtool: 'inline-source-map',
     entry: [
-        'webpack-dev-server/client?http://127.0.0.1:8080/',
+        'react-hot-loader/patch',
+        'webpack-dev-server/client?http://localhost:3000',
         'webpack/hot/only-dev-server',
-        './src'
+        './src/index.js'
     ],
     output: {
-        path: path.join(__dirname, 'public'),
-        filename: 'bundle.js'
+        path: path.join(__dirname, 'dist'),
+        filename: 'bundle.js',
+        publicPath: "/"
     },
+    devtool: 'inline-source-map',
     resolve: {
         modules: ['node_modules', 'src'],
         extensions: ['.js']
     },
     module: {
-        loaders: [{
+        rules: [{
             test: /\.jsx?$/,
-            exclude: /node_module/,
             use: [
                 {
-                    loader: 'react-hot-loader/webpack'
-                },
-                {
                     loader: 'babel-loader',
-                    query:
-                        {
-                            presets: ['stage-2', 'react']
-                        }
+                    options: {
+                        presets: [['es2015', {modules: false}], 'stage-2', 'react']
+                    }
                 }],
+            exclude: /node_module/
         }]
     },
+    devServer: {
+        host: 'localhost',
+        port: 3000,
+        hot: true
+    },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoEmitOnErrorsPlugin()
+        new webpack.NoEmitOnErrorsPlugin(),
+        new webpack.NamedModulesPlugin(),
+        new webpack.HotModuleReplacementPlugin()
     ]
 };
